@@ -1,0 +1,54 @@
+//Encyclopedia.h
+
+#ifndef ENCYCLOPEDIAH
+#define ENCYCLOPEDIAH
+
+#include <string>
+#include "Book.h"
+
+using namespace std;
+
+class Encyclopedia : public Book {
+   public:
+      void SetEdition(string userEdition);
+      string GetEdition();
+      void SetNumPages(int userNumPages);
+      int GetNumPages();
+      void PrintInfo();
+   private:
+      string edition;
+      int numPages;
+};
+
+#endif
+
+//Encyclopedia.cpp
+
+#include "Encyclopedia.h"
+#include <iostream>
+
+void Encyclopedia::SetEdition(string userEdition) {
+   edition = userEdition;
+}
+
+string Encyclopedia::GetEdition() {
+   return edition;
+}
+
+void Encyclopedia::SetNumPages(int userNumPages) {
+   numPages = userNumPages;
+}
+
+int Encyclopedia::GetNumPages() {
+   return numPages;
+}
+
+void Encyclopedia::PrintInfo() {
+   cout << "Book Information: " << endl;
+   cout << "   Book Title: " << title << endl;
+   cout << "   Author: " << author << endl;
+   cout << "   Publisher: " << publisher << endl;
+   cout << "   Publication Date: " << publicationDate << endl;
+   cout << "   Edition: " << edition << endl;
+   cout << "   Number of Pages: " << numPages << endl;
+}
