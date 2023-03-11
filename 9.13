@@ -1,0 +1,49 @@
+//main.cpp
+
+#include "Number.h"
+#include <iostream>
+using namespace std;
+
+int main() {
+    
+    int input;
+    cin >> input;
+    
+    Number num = Number(input);
+    cout << num;
+    
+    return 0;
+}
+
+//Number.cpp
+
+#include "Number.h"
+
+Number::Number(int i) {
+    num = i;
+}
+
+ostream & operator<< (ostream & out, const Number& n){
+    out << "The value is " << n.num << endl;
+    return out;
+}
+
+//Number.h
+
+#ifndef NUMBER.H
+#define NUMBER.H
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class Number {
+    private:
+        int num;
+    public:
+        Number(int i);
+    
+    friend ostream & operator<< (ostream & out, const Number & n);
+};
+
+#endif
