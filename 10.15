@@ -1,0 +1,78 @@
+#include "Plant.h"
+#include "Flower.h"
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+//PrintVector function that prints an vector of plant (or flower) object pointers
+void PrintVector(vector<Plant*> myGarden)
+{
+   for(size_t i = 0; i < myGarden.size(); ++i){
+      cout << "Plant " << i+1 << " Information:" << endl;
+      myGarden[i]->PrintInfo();
+      cout<<endl;
+   }
+}
+
+//main function
+int main(int argc, char* argv[]) {
+
+//Declare a vector called myGarden that can hold object of type plant pointer
+vector<Plant*> myGarden;
+
+//Declare variables - plantName, plantCost, flowerName, flowerCost,
+string plantName, flowerName, buff;
+int plantCost, flowerCost;
+// Declare variables - colorOfFlowers, isAnnual
+bool isAnnual;
+string colorOfFlowers;
+
+Flower *flower;
+Plant *plant;
+
+string input;
+cin >> input;
+
+while(input != "-1") {
+//Check if input is a plant or flower
+
+   // Store as a plant object or flower object
+   if(input=="plant")
+   {
+      plant = new Plant;
+      cin>>plantName;
+      cin>>plantCost;
+      plant->SetPlantName(plantName);
+      plant->SetPlantCost(plantCost);
+      myGarden.push_back(plant);
+   } else if(input=="flower") {
+      flower = new Flower;
+      cin>>flowerName;
+      cin>>flowerCost;
+      cin>>buff;
+      if(buff=="true")
+      isAnnual = true;
+   else{
+      isAnnual = false;
+   }
+   cin>>colorOfFlowers;
+   flower->SetPlantName(flowerName);
+   flower->SetPlantCost(flowerCost);
+   flower->SetPlantType(isAnnual);
+   flower->SetColorOfFlowers(colorOfFlowers);
+   myGarden.push_back(flower);
+   }
+   cin >> input;
+}
+
+//all the method PrintVector to print myGarden
+PrintVector(myGarden);
+
+for (size_t i = 0; i < myGarden.size(); ++i) {
+   delete myGarden.at(i);
+}
+
+return 0;
+}
