@@ -1,0 +1,81 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+
+// Function to compute the letter grade based on the average score
+char computeLetterGrade(double avgScore) {
+    if (avgScore >= 90) {
+        return 'A';
+    } else if (avgScore >= 80) {
+        return 'B';
+    } else if (avgScore >= 70) {
+        return 'C';
+    } else if (avgScore >= 60) {
+        return 'D';
+    } else {
+        return 'F';
+    }
+}
+
+int main() {
+    string inputFileName;
+    cout << "Enter the name of the input file: ";
+    cin >> inputFileName;
+
+    ifstream inputFile(inputFileName);
+
+    if (!inputFile) {
+        cerr << "Error: could not open input file.\n";
+        return 1;
+    }
+
+    // Open the output file
+    ofstream outputFile("report.txt");
+
+    // Variables to store the exam scores and averages
+    double midterm1Sum = 0, midterm2Sum = 0, finalSum = 0;
+    int numStudents = 0;
+
+    while (!inputFile.eof()) {
+        string lastName, firstName;
+        double midterm1Score, midterm2Score, finalScore;
+
+        inputFile >> lastName >> firstName >> midterm1Score >> midterm2Score >> finalScore;
+
+        if (!inputFile.fail()) {
+            // Compute the average score and letter grade
+            double avgScore = (midterm1Score + midterm2Score + finalScore) / 3;
+            char letterGrade = computeLetterGrade(avgScore);
+
+            // Output the student information to the output file
+            outputFile << lastName << "\t" << firstName << "\t"
+                       << midterm1Score << "\t" << midterm2Score << "\t" << finalScore << "\t"
+                       << letterGrade << endl;
+
+            // Update the sums of the exam scores
+            midterm1Sum += midterm1Score;
+            midterm2Sum += midterm2Score;
+            finalSum += finalScore;
+            numStudents++;
+        }
+    }
+
+    // Compute the averages of the exam scores
+    double midterm1Avg = midterm1Sum / numStudents;
+    double midterm2Avg = midterm2Sum / numStudents;
+    double finalAvg = finalSum / numStudents;
+
+    // Output the averages to the output file
+    outputFile << "\nAverages: midterm1 " << fixed << setprecision(2) << midterm1Avg
+               << ", midterm2 " << fixed << setprecision(2) << midterm2Avg
+               << ", final " << fixed << setprecision(2) << finalAvg << endl;
+
+    // Close the files
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
